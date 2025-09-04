@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - PimexDS</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-login-card" id="login-section">
+            <div class="admin-login-header">
+                <img src="images/logo.png" alt="PimexDS Logo">
+                <h1>Acceso de Administrador</h1>
+                <p>Ingrese las credenciales de administrador</p>
+            </div>
+            
+            <form id="admin-login-form" class="admin-login-form">
+                <div class="form-group">
+                    <label for="admin-username"><i class="fas fa-user"></i> Usuario</label>
+                    <input type="text" id="admin-username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="admin-password"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="admin-password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <div class="captcha-container">
+                        <div class="captcha-code" id="captcha-code">A3B7C2</div>
+                        <button type="button" id="refresh-captcha" class="captcha-refresh">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <input type="text" id="captcha-input" placeholder="Ingrese el código CAPTCHA" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Acceder
+                </button>
+
+                <div class="security-notice">
+                    <i class="fas fa-shield-alt"></i>
+                    <p>Esta área es restringida. Todas las actividades son monitoreadas.</p>
+                </div>
+            </form>
+        </div>
+
+        <div class="admin-dashboard hidden" id="dashboard-section">
+            <header class="admin-header">
+                <div class="admin-header-content">
+                    <div class="admin-logo">
+                        <img src="images/logo.png" alt="PimexDS Logo">
+                        <span>Panel de Administración</span>
+                    </div>
+                    <div class="admin-actions">
+                        <div class="admin-welcome">
+                            <i class="fas fa-user-shield"></i>
+                            <span>Administrador</span>
+                        </div>
+                        <button id="logout-admin" class="btn-secondary">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="admin-nav">
+                <button class="nav-btn active" data-target="stats"><i class="fas fa-chart-bar"></i> Estadísticas</button>
+                <button class="nav-btn" data-target="entities"><i class="fas fa-building"></i> Entidades</button>
+                <button class="nav-btn" data-target="documents"><i class="fas fa-file-alt"></i> Documentos</button>
+                <button class="nav-btn" data-target="users"><i class="fas fa-users"></i> Usuarios</button>
+                <button class="nav-btn" data-target="settings"><i class="fas fa-cog"></i> Configuración</button>
+            </div>
+
+            <main class="admin-main">
+                <!-- Panel de Estadísticas -->
+                <div class="admin-panel active" id="stats-panel">
+                    <h2><i class="fas fa-chart-bar"></i> Dashboard de Estadísticas</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-globe-americas"></i>
+                            </div>
+                            <div class="stat-data">
+                                <div class="stat-number" id="countries-count">0</div>
+                                <div class="stat-label">Países Registrados</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="stat-data">
+                                <div class="stat-number" id="admin-entities-count">0</div>
+                                <div class="stat-label">Entidades Registradas</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-data">
+                                <div class="stat-number" id="admin-documents-count">0</div>
+                                <div class="stat-label">Documentos Analizados</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-times-circle"></i>
+                            </div>
+                            <div class="stat-data">
+                                <div class="stat-number" id="admin-fake-documents">0</div>
+                                <div class="stat-label">Documentos Falsos</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-container">
+                        <div class="chart-card">
+                            <h3>Documentos por Tipo de Entidad</h3>
+                            <canvas id="entities-chart" width="400" height="200"></canvas>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <h3>Autenticidad de Documentos</h3>
+                            <canvas id="authenticity-chart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel de Entidades -->
+                <div class="admin-panel" id="entities-panel">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-building"></i> Gestión de Entidades</h2>
+                        <button class="btn-primary" id="export-entities">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                    </div>
+                    
+                    <div class="filters">
+                        <select id="entity-type-filter">
+                            <option value="">Todos los tipos</option>
+                            <option value="government">Gobierno</option>
+                            <option value="education">Educación</option>
+                            <option value="business">Empresa</option>
+                            <option value="church">Iglesia</option>
+                            <option value="police">Policía</option>
+                        </select>
+                        
+                        <select id="country-filter">
+                            <option value="">Todos los países</option>
+                            <!-- Los países se cargarán dinámicamente -->
+                        </select>
+                        
+                        <input type="text" id="entity-search" placeholder="Buscar entidad...">
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="entities-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>País</th>
+                                    <th>Teléfono</th>
+                                    <th>Fecha Registro</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Los datos se cargarán mediante JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button id="prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                        <span id="current-page">1</span>
+                        <button id="next-page"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Los demás paneles (documents, users, settings) seguirían una estructura similar -->
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

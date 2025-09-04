@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PimexDS - Verificación de Documentos Oficiales</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo.png" type="image/png">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="images/logo.png" alt="PimexDS Logo">
+                    <span>PimexDS</span>
+                </div>
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link">Inicio</a>
+                    <a href="#about" class="nav-link">Nosotros</a>
+                    <a href="#impact" class="nav-link">Impacto</a>
+                    <a href="#partners" class="nav-link">Socios</a>
+                    <a href="#unesco" class="nav-link">UNESCO</a>
+                    <a href="login.html" class="nav-link">Iniciar Sesión</a>
+                    <a href="register.html" class="nav-link register-btn">Registrarse</a>
+                    <select id="language-selector" class="language-selector">
+                        <option value="es">Español</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="ru">Русский</option>
+                        <option value="de">Deutsch</option>
+                        <option value="zh">中文</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Verificación de Documentos con Inteligencia Artificial</h1>
+                <p class="hero-subtitle">Combatiendo la falsificación documental en Guinea Ecuatorial y África</p>
+                <div class="hero-buttons">
+                    <a href="register.html" class="btn-primary">Comenzar ahora</a>
+                    <a href="#scan" class="btn-secondary">Escanear documento</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/banner.jpg" alt="Tecnología de verificación de documentos">
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title">La Historia de PimexDS</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>PimexDS nació como respuesta a la creciente problemática de falsificación de documentos oficiales en Guinea Ecuatorial y el continente africano. Nuestra misión es fortalecer la integridad de instituciones mediante tecnología avanzada de verificación.</p>
+                        <p>Utilizamos inteligencia artificial, visión por computadora y blockchain para asegurar la autenticidad de documentos académicos, laborales y gubernamentales. Nuestra solución es accesible, escalable y está alineada con los Objetivos de Desarrollo Sostenible de la UNESCO.</p>
+                        <p>El futuro de PimexDS incluye la expansión a otros países africanos y el desarrollo de nuevas funcionalidades para combatir el fraude documental de manera más efectiva.</p>
+                    </div>
+                    <div class="about-images">
+                        <img src="images/history1.jpg" alt="Historia de PimexDS 1">
+                        <img src="images/history2.jpg" alt="Historia de PimexDS 2">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="scan" class="scan-section">
+            <div class="container">
+                <h2 class="section-title">Verificación de Documentos</h2>
+                <div class="scan-container">
+                    <div class="scan-options">
+                        <div class="option-card" id="upload-option">
+                            <div class="option-icon">📁</div>
+                            <h3>Subir documento</h3>
+                            <p>Selecciona un archivo desde tu dispositivo</p>
+                            <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" hidden>
+                            <button class="option-btn" onclick="document.getElementById('file-input').click()">Seleccionar archivo</button>
+                        </div>
+                        <div class="option-card" id="camera-option">
+                            <div class="option-icon">📷</div>
+                            <h3>Usar cámara</h3>
+                            <p>Escanea tu documento con la cámara</p>
+                            <button class="option-btn" id="start-camera">Activar cámara</button>
+                        </div>
+                    </div>
+                    <div class="camera-preview hidden" id="camera-preview">
+                        <video id="video" autoplay playsinline></video>
+                        <canvas id="canvas" hidden></canvas>
+                        <div class="camera-controls">
+                            <button id="capture-btn" class="btn-primary">Capturar</button>
+                            <button id="switch-camera" class="btn-secondary">Cambiar cámara</button>
+                            <button id="close-camera" class="btn-secondary">Cerrar</button>
+                        </div>
+                    </div>
+                    <div class="document-preview hidden" id="document-preview">
+                        <img id="preview-image" src="" alt="Vista previa del documento">
+                        <div class="preview-controls">
+                            <button id="analyze-btn" class="btn-primary">Analizar documento</button>
+                            <button id="cancel-preview" class="btn-secondary">Cancelar</button>
+                        </div>
+                    </div>
+                    <div class="analysis-result hidden" id="analysis-result">
+                        <h3>Resultado del análisis</h3>
+                        <div class="result-content">
+                            <div class="authenticity-score">
+                                <div class="score-circle">
+                                    <span id="score-value">0%</span>
+                                </div>
+                                <p id="authenticity-label">Autenticidad</p>
+                            </div>
+                            <div class="result-details">
+                                <h4>Detalles del análisis:</h4>
+                                <ul id="result-list">
+                                    <!-- Los detalles del análisis se insertarán aquí -->
+                                </ul>
+                            </div>
+                        </div>
+                        <button id="new-analysis" class="btn-primary">Nuevo análisis</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="impact-section">
+            <div class="container">
+                <h2 class="section-title">Impacto y Resultados</h2>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number" id="entities-count">0</div>
+                        <div class="stat-label">Entidades registradas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="documents-analyzed">0</div>
+                        <div class="stat-label">Documentos analizados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="fake-documents">0</div>
+                        <div class="stat-label">Documentos falsos detectados</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="partners" class="partners-section">
+            <div class="container">
+                <h2 class="section-title">Entidades asociadas</h2>
+                <div class="partners-carousel">
+                    <div class="carousel-track" id="carousel-track">
+                        <!-- Los logos de las entidades se insertarán aquí mediante JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="unesco" class="unesco-section">
+            <div class="container">
+                <h2 class="section-title">Colaboración con la UNESCO</h2>
+                <div class="unesco-content">
+                    <div class="unesco-info">
+                        <p>PimexDS está alineado con los Objetivos de Desarrollo Sostenible de la UNESCO, contribuyendo específicamente a:</p>
+                        <ul>
+                            <li>ODS 4: Educación de calidad mediante certificaciones verificables</li>
+                            <li>ODS 8: Trabajo decente y crecimiento económico</li>
+                            <li>ODS 16: Paz, justicia e instituciones sólidas</li>
+                        </ul>
+                        <p>Nuestra solución fomenta la cooperación científica mediante el uso ético de la inteligencia artificial y protege el patrimonio cultural documental de las naciones.</p>
+                    </div>
+                    <div class="unesco-image">
+                        <img src="images/unesco.png" alt="Logo UNESCO">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Header y otras secciones existentes -->
+
+    <section id="scan" class="scan-section">
+        <div class="container">
+            <h2 class="section-title">Verificación de Documentos</h2>
+            <div class="scan-container">
+                <!-- Selector de método de escaneo -->
+                <div class="scan-methods">
+                    <div class="method-tabs">
+                        <button class="tab-btn active" data-tab="upload">
+                            <i class="fas fa-upload"></i> Subir Documento
+                        </button>
+                        <button class="tab-btn" data-tab="camera">
+                            <i class="fas fa-camera"></i> Usar Cámara
+                        </button>
+                        <button class="tab-btn" data-tab="url">
+                            <i class="fas fa-link"></i> Desde URL
+                        </button>
+                    </div>
+
+                    <!-- Subida de archivos -->
+                    <div class="tab-content active" id="upload-tab">
+                        <div class="upload-area" id="drop-zone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Arrastra y suelta tu documento aquí</h3>
+                            <p>o</p>
+                            <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.tiff,.bmp,.doc,.docx,.txt" multiple hidden>
+                            <button class="btn-primary" onclick="document.getElementById('file-input').click()">
+                                Seleccionar archivos
+                            </button>
+                            <div class="supported-formats">
+                                <p>Formatos soportados: PDF, JPG, PNG, TIFF, BMP, DOC, DOCX, TXT</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cámara -->
+                    <div class="tab-content" id="camera-tab">
+                        <div class="camera-container">
+                            <div class="camera-preview" id="camera-preview">
+                                <video id="video" autoplay playsinline></video>
+                                <div class="camera-overlay">
+                                    <div class="scan-frame"></div>
+                                    <p>Alinee el documento dentro del marco</p>
+                                </div>
+                                <canvas id="canvas" hidden></canvas>
+                            </div>
+                            <div class="camera-controls">
+                                <button id="capture-btn" class="btn-primary" disabled>
+                                    <i class="fas fa-camera"></i> Capturar
+                                </button>
+                                <button id="switch-camera" class="btn-secondary">
+                                    <i class="fas fa-sync"></i> Cambiar Cámara
+                                </button>
+                                <button id="upload-camera" class="btn-secondary">
+                                    <i class="fas fa-upload"></i> Subir desde galería
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Desde URL -->
+                    <div class="tab-content" id="url-tab">
+                        <div class="url-input-container">
+                            <div class="form-group">
+                                <label for="document-url">URL del documento</label>
+                                <input type="url" id="document-url" placeholder="https://ejemplo.com/documento.pdf">
+                                <button id="fetch-document" class="btn-primary">
+                                    <i class="fas fa-download"></i> Obtener Documento
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vista previa de documentos -->
+                <div class="document-preview hidden" id="document-preview">
+                    <div class="preview-header">
+                        <h3>Vista Previa del Documento</h3>
+                        <button id="close-preview" class="btn-icon">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="preview-content">
+                        <div class="document-thumbnails" id="document-thumbnails">
+                            <!-- Las miniaturas se generarán aquí -->
+                        </div>
+                        <div class="preview-controls">
+                            <button id="analyze-btn" class="btn-primary btn-large">
+                                <i class="fas fa-search"></i> Analizar Documento
+                            </button>
+                            <button id="cancel-preview" class="btn-secondary">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados del análisis -->
+                <div class="analysis-result hidden" id="analysis-result">
+                    <div class="result-header">
+                        <h3>Resultados del Análisis</h3>
+                        <div class="result-actions">
+                            <button id="download-report" class="btn-secondary">
+                                <i class="fas fa-download"></i> Descargar Reporte
+                            </button>
+                            <button id="new-analysis" class="btn-secondary">
+                                <i class="fas fa-redo"></i> Nuevo Análisis
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="result-content">
+                        <div class="authenticity-score">
+                            <div class="score-circle" id="score-circle">
+                                <span id="score-value">0%</span>
+                            </div>
+                            <div class="score-label">
+                                <h4 id="authenticity-label">Autenticidad del Documento</h4>
+                                <p id="confidence-level">Nivel de confianza: Alto</p>
+                            </div>
+                        </div>
+                        
+                        <div class="result-details">
+                            <div class="detail-tabs">
+                                <button class="detail-tab active" data-tab="general">General</button>
+                                <button class="detail-tab" data-tab="security">Elementos de Seguridad</button>
+                                <button class="detail-tab" data-tab="comparison">Comparación</button>
+                                <button class="detail-tab" data-tab="metadata">Metadatos</button>
+                            </div>
+                            
+                            <div class="detail-content">
+                                <div class="detail-panel active" id="general-panel">
+                                    <div class="detail-grid">
+                                        <div class="detail-item">
+                                            <span class="detail-label">Tipo de Documento</span>
+                                            <span class="detail-value" id="doc-type">PDF</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="detail-label">Tamaño</span>
+                                            <span class="detail-value" id="doc-size">2.4 MB</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="detail-label">Resolución</span>
+                                            <span class="detail-value" id="doc-resolution">300 DPI</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="detail-label">Fecha de Análisis</span>
+                                            <span class="detail-value" id="analysis-date">20/11/2023</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-panel" id="security-panel">
+                                    <div class="security-elements" id="security-elements">
+                                        <!-- Elementos de seguridad detectados -->
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-panel" id="comparison-panel">
+                                    <div class="comparison-results" id="comparison-results">
+                                        <!-- Resultados de comparación -->
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-panel" id="metadata-panel">
+                                    <div class="metadata-list" id="metadata-list">
+                                        <!-- Metadatos extraídos -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-summary">
+                        <h4>Resumen del Análisis</h4>
+                        <div class="summary-content" id="summary-content">
+                            <!-- Resumen generado automáticamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Actividad Reciente -->
+    <section id="recent-activity" class="activity-section">
+        <div class="container">
+            <h2 class="section-title">Actividad Reciente</h2>
+            <div class="activity-container">
+                <div class="activity-filters">
+                    <select id="activity-filter">
+                        <option value="all">Toda la actividad</option>
+                        <option value="today">Hoy</option>
+                        <option value="week">Esta semana</option>
+                        <option value="month">Este mes</option>
+                    </select>
+                </div>
+                
+                <div class="activity-list" id="activity-list">
+                    <!-- Las actividades se cargarán dinámicamente -->
+                    <div class="activity-placeholder">
+                        <i class="fas fa-history"></i>
+                        <p>No hay actividad reciente</p>
+                        <span>Los documentos que analices aparecerán aquí</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/scanner.js"></script>
+    <script src="js/activity.js"></script>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="images/logo.png" alt="PimexDS Logo">
+                        <span>PimexDS</span>
+                    </div>
+                    <p>Sistema de Verificación de Documentos Oficiales mediante Inteligencia Artificial</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces rápidos</h3>
+                    <ul>
+                        <li><a href="#home">Inicio</a></li>
+                        <li><a href="#about">Nosotros</a></li>
+                        <li><a href="#scan">Verificar documento</a></li>
+                        <li><a href="login.html">Iniciar sesión</a></li>
+                        <li><a href="register.html">Registrarse</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p>Email: info@pimexds.com</p>
+                    <p>Teléfono: +240 222 333 444</p>
+                    <p>Guinea Ecuatorial</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 PimexDS. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/camera.js"></script>
+    <script src="js/language.js"></script>
+</body>
+</html>
